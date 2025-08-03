@@ -4,6 +4,13 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import { Lists } from './listview';
 import { Accordion } from './accordion';
 
+// Import styles from style folder
+import '../style/style.css';
+
+
+
+
+
 ReactDOM.render(
   <HashRouter>
     <Switch>
