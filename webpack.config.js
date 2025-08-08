@@ -1,9 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var basePath = __dirname;
 
 module.exports = {
+  mode: 'development',
   context: path.join(basePath, "src"),
   resolve: {
       extensions: ['.js', '.ts', '.tsx']
@@ -18,8 +19,17 @@ module.exports = {
   },
 
   devServer: {
-       port: 5001,
-       stats: 'errors-only'
+    port: 5001,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
 
   module: {
@@ -27,28 +37,31 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
-        options: {
-          useBabel: true,
-        },
+        loader: 'ts-loader',
       },
-      {
+     {
         test: /\.css$/,
-        include: /node_modules/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: {
+        use: [
+          'style-loader',
+          {
             loader: 'css-loader',
-          },
-        }),
-      },  
+            options: {
+              importLoaders: 1,
+            }
+          }
+        ],
+      },
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'bundle.css',
-      disable: false,
-      allChunks: true,
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'index.html'
     }),
-  ]
+  ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  }
 }
