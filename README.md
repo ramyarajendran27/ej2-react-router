@@ -18,12 +18,16 @@ Install [Node.js and npm](https://nodejs.org/en/) (v6.6.0 or newer) if they are 
 
 ## Steps to build it
 
-USe tje below commands to run the application
-  
-  ```
-  npm install
-  ```
+Use the following command to install the dependent npm packages from the command prompt.
 
- ```bash
- npm start
- ```
+```
+npm install
+```
+
+Run the application by using following command:
+
+```
+npm start
+```
+
+Open your browser and navigate to http://localhost:3000/ to view the application.
